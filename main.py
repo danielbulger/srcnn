@@ -38,13 +38,17 @@ def main():
         ),
         Image.BICUBIC
     )
+
+    # Convert the image data into a tensor
     input_tensor = Variable(ToTensor()(input_image))
     input_tensor = input_tensor.view(1, -1, input_image.size[1], input_image.size[0])
 
     device = torch.device('cuda' if args.cuda else 'cpu')
 
+    # Load the model and initialise.
     model = torch.load(args.model)
     model.eval()
+
     if args.cuda:
         input_tensor = input_tensor.to(device)
         model = model.to(device)

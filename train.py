@@ -1,6 +1,6 @@
 from argparse import ArgumentParser
 from model.SRCNN import SRCNN
-from model import dataset
+from data import dataset
 import torch
 import torch.nn
 import torch.optim
@@ -67,6 +67,7 @@ def main():
 
         for index, data in enumerate(data_loader):
             batch, target = data
+
             # Move this to the GPU if available
             if args.cuda:
                 batch = batch.to(device)
@@ -75,6 +76,7 @@ def main():
             optimiser.zero_grad()
             prediction = model(batch)
 
+            # Calculate the loss between the prediction and the target.
             loss = mse(prediction, target)
             loss.backward()
 
